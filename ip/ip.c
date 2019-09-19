@@ -30,7 +30,7 @@ int use_iec;
 int show_stats;
 int show_details;
 int oneline;
-int brief;
+int brief = 1;
 int json;
 int timestamp;
 int force;
@@ -55,7 +55,7 @@ static void usage(void)
 "                    -h[uman-readable] | -iec | -j[son] | -p[retty] |\n"
 "                    -f[amily] { inet | inet6 | mpls | bridge | link } |\n"
 "                    -4 | -6 | -I | -D | -M | -B | -0 |\n"
-"                    -l[oops] { maximum-addr-flush-attempts } | -br[ief] |\n"
+"                    -l[oops] { maximum-addr-flush-attempts } | -v[erbose] |\n"
 "                    -o[neline] | -t[imestamp] | -ts[hort] | -b[atch] [filename] |\n"
 "                    -rc[vbuf] [size] | -n[etns] name | -a[ll] | -c[olor]}\n");
 	exit(-1);
@@ -261,8 +261,8 @@ int main(int argc, char **argv)
 			if (argc <= 1)
 				usage();
 			batch_file = argv[1];
-		} else if (matches(opt, "-brief") == 0) {
-			++brief;
+		} else if (matches(opt, "-verbose") == 0) {
+			--brief;
 		} else if (matches(opt, "-json") == 0) {
 			++json;
 		} else if (matches(opt, "-pretty") == 0) {
