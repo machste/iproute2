@@ -14,11 +14,13 @@ IPOBJ=ip.o ipaddress.o ipaddrlabel.o iproute.o iprule.o ipnetns.o \
 
 RTMONOBJ=rtmon.o
 
+TESTOBJ=test.o
+
 include ../config.mk
 
-ALLOBJ=$(IPOBJ) $(RTMONOBJ)
+ALLOBJ=$(IPOBJ) $(RTMONOBJ) $(TESTOBJ)
 SCRIPTS=ifcfg rtpr routel routef
-TARGETS=ip rtmon
+TARGETS=ip rtmon test
 
 all: $(TARGETS) $(SCRIPTS)
 
@@ -26,6 +28,9 @@ ip: $(IPOBJ) $(LIBNETLINK)
 	$(QUIET_LINK)$(CC) $^ $(LDFLAGS) $(LDLIBS) -o $@
 
 rtmon: $(RTMONOBJ)
+	$(QUIET_LINK)$(CC) $^ $(LDFLAGS) $(LDLIBS) -o $@
+
+test: $(TESTOBJ) $(LIBNETLINK)
 	$(QUIET_LINK)$(CC) $^ $(LDFLAGS) $(LDLIBS) -o $@
 
 install: all
